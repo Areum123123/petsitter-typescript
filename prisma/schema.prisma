@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id           Int  @id @default(autoincrement())   
+  email        String   @unique  
+  password     String   
+  name         String 
+  phone_number String
+  address      String
+  role          Role     @default(USER) 
+  image_url    String?
+ 
+  created_at DateTime @default(now()) 
+  updated_at DateTime @updatedAt  
+
+ reservations     Reservations[] 
+ reviews          Reviews[]
+ reservation_logs Reservation_logs[]
+ refresh_tokens   Refresh_tokens?
+
+  @@map("Users")
+ }
+
+ enum Role {
+     USER
+     ADMIN
+ }
+
+
+
+ model Petsitters {
+  id              Int  @id @default(autoincrement())   
+  name            String   
+  experience      String   
+  certification   String 
+  region          String
+  total_rate      Float? //소숫점값 데이터 유형
+  image_url       String
+
+  created_at DateTime @default(now()) 
+  updated_at DateTime @updatedAt  
+  
+  reservations     Reservations[]
+  reviews          Reviews[]
+  
+
+  @@map("Petsitters")
+ }
+
+
+
+
+  model Reservations {
+  id                  Int  @id @default(autoincrement())  
+
+  pet_sitter_id      Int   //FK
+  user_id            Int   //FK
+
+  dog_name            String   
+  dog_breed           String   
+  dog_age             String 
+  dog_weight          String
+  request_details     String?
+  booking_date        DateTime
+  status              Status  @default(PENDING)
+  deleted_at          DateTime?  
+
+  created_at DateTime @default(now()) 
+  updated_at DateTime @updatedAt  
+
+  reservation_logs Reservation_logs[]
+  petsitters Petsitters @relation(fields:[pet_sitter_id], references:[id], onDelete:Cascade)
+  users     Users     @relation(fields:[user_id], references:[id], onDelete:Cascade)
+
+  @@unique([pet_sitter_id, booking_date]) // 펫시터의 예약날짜가 중복으로 예약되지 않도록 설정
+  @@map("Reservations")
+ }
+
+
+
+ enum Status {
+  PENDING    //예약대기
+  CONFIRMED  //예약확인
+  COMPLETED  //예약이행완료
+  CANCELED   //예약취소
+ }
+
+
+
+
+ model Reviews {
+  id              Int  @id @default(autoincrement())   
+  
+  pet_sitter_id   Int      //FK  
+  user_id         Int       //FK   
+
+  rating          Int 
+  comment         String
+  
+  created_at DateTime @default(now()) 
+  updated_at DateTime @updatedAt  
+  
+  petsitters Petsitters @relation(fields:[pet_sitter_id], references:[id], onDelete:Cascade)
+  users     Users     @relation(fields:[user_id], references:[id], onDelete:Cascade)
+
+  @@map("Reviews")
+ }
+
+
+
+
+model Refresh_tokens {
+  id        Int     @id @default(autoincrement()) 
+ user_id    Int  @unique   
+ refresh_token    String? 
+ 
+created_at DateTime @default(now()) 
+updated_at DateTime @updatedAt  
+  
+
+  User Users @relation(fields:[user_id], references: [id], onDelete:Cascade)
+
+  @@map("Refresh_tokens")
+  }
+
+
+model Reservation_logs {
+  id              Int  @id @default(autoincrement())   
+  
+  reservation_id   Int      //FK  
+  user_id         Int       //FK   
+
+  old_status     Status 
+  new_status     Status
+  reason         String
+  
+  created_at DateTime @default(now()) 
+  updated_at DateTime @updatedAt  
+  
+  reservations Reservations @relation(fields:[reservation_id], references:[id]) //onDelete:Cascade
+  users     Users     @relation(fields:[user_id], references:[id], onDelete:Cascade)
+
+  @@map("Reservation_logs")
+ }

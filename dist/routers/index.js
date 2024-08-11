@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_router_1 = __importDefault(require("../routers/auth.router"));
+const petsitter_router_1 = __importDefault(require("./petsitter.router"));
+const reservation_router_1 = __importDefault(require("./reservation.router"));
+const user_router_1 = __importDefault(require("./user.router"));
+const review_router_1 = __importDefault(require("./review.router"));
+const reservation_logs_router_1 = __importDefault(require("./reservation-logs.router"));
+const apiRouter = express_1.default.Router();
+apiRouter.use("/auth", auth_router_1.default);
+apiRouter.use("/pet-sitters", petsitter_router_1.default);
+apiRouter.use("/users", user_router_1.default);
+apiRouter.use("/reviews", review_router_1.default);
+apiRouter.use("/reservations", reservation_router_1.default);
+apiRouter.use("/", reservation_logs_router_1.default);
+exports.default = apiRouter;
