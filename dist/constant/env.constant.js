@@ -13,4 +13,5 @@ exports.REFRESH_TOKEN_SECRET_KEY = REFRESH_TOKEN_SECRET_KEY;
 exports.S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 exports.AWS_REGION = process.env.AWS_REGION;
 exports.AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
-exports.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+exports.AWS_SECRET_ACCESS_KEY = process.env
+    .AWS_SECRET_ACCESS_KEY;

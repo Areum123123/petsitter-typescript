@@ -44,3 +44,11 @@ export interface updateUser {
   phone_number: string;
   address: string;
 }
+
+export interface resultUpdateUser {
+  id: number;
+  name: string;
+  phone_number: string;
+  address: string;
+  updated_at: Date;
+}

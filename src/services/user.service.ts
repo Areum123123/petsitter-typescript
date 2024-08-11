@@ -21,10 +21,7 @@ export class UserService {
     return updatedUser;
   };
 
-  // updateUserImage = async (userId: number, imageUrl: string) => {
-  //   return this.userRepository.updateImage(userId, { image_url: imageUrl });
-  // };
-  // uploadImage = async (userId: number, imageUrl: string) => {
-  //   return await this.userRepository.uploadImage(userId, imageUrl);
-  // };
+  uploadImage = async (userId: number, fileUrl: string) => {
+    return await this.userRepository.uploadImage(userId, fileUrl);
+  };
 }

@@ -1,4 +1,4 @@
-import { updateUser, User, UserTable } from "../models/auth.js";
+import { updateUser, resultUpdateUser, UserTable } from "../models/auth.js";
 import { prisma } from "../utils/prisma.util.js";
 
 export class UserRepository {
@@ -19,7 +19,10 @@ export class UserRepository {
     });
   };
 
-  updateUser = async (userId: number, updateData: updateUser) => {
+  updateUser = async (
+    userId: number,
+    updateData: updateUser
+  ): Promise<resultUpdateUser> => {
     return await prisma.users.update({
       where: { id: +userId },
       data: updateData,
@@ -34,6 +37,7 @@ export class UserRepository {
   };
 
   //이미지
+
   //   updateImage = async (userId: number, updateData: Partial<UserTable>) => {
   //     return await prisma.users.update({
   //       where: { id: userId },
@@ -44,12 +48,13 @@ export class UserRepository {
   //     });
   //   };
   // }
-  // uploadImage = async (userId:number, imageUrl:string) => {
-  //   return await prisma.users.update({
-  //     where: { id: +userId },
-  //     data: { image_url: imageUrl },
-  //     select: {
-  //       image_url: true,
-  //     },
-  //   });
+  uploadImage = async (userId: number, fileUrl: string) => {
+    return await prisma.users.update({
+      where: { id: +userId },
+      data: { image_url: fileUrl },
+      select: {
+        image_url: true,
+      },
+    });
+  };
 }

@@ -10,8 +10,9 @@ const REFRESH_TOKEN_SECRET_KEY =
 
 export { PORT_NUMBER, ACCESS_TOKEN_SECRET_KEY, REFRESH_TOKEN_SECRET_KEY };
 
-export const S3_BUCKET_NAME: string = process.env.S3_BUCKET_NAME as string;
-export const AWS_REGION = process.env.AWS_REGION;
+export const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME as string;
+export const AWS_REGION = process.env.AWS_REGION as string;
 
-export const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
-export const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+export const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID as string;
+export const AWS_SECRET_ACCESS_KEY = process.env
+  .AWS_SECRET_ACCESS_KEY as string;

@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
 import { updateUser, UserTable } from "../models/auth"; // 사용되는 User 타입이 정의된 파일에서 import
-import multerS3 from "multer-s3";
 
 export class UserController {
   private userService = new UserService();
@@ -74,4 +73,36 @@ export class UserController {
   };
 
   // 사용자 이미지를 업로드하는 메서드
+  uploadImage = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> => {
+    const userId = req.user?.id;
+    const fileData = req.file; //as Express.Multer.File | undefined;
+
+    if (!userId) {
+      res
+        .status(404)
+        .json({ status: 404, message: "사용자를 찾을 수 없습니다." });
+      return;
+    }
+    if (!fileData || !("location" in fileData)) {
+      return res.status(400).json({ error: "파일을 업로드 해주세요." });
+    }
+    // fileData의 filename 속성을 사용할 때
+    const fileUrl: string = fileData.location as string; // 파일 이름을 string으로 타입 단언
+
+    try {
+      const updatedUser = await this.userService.uploadImage(userId, fileUrl);
+
+      res.status(200).json({
+        status: 200,
+        message: "이미지업로드 성공!",
+        data: updatedUser,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }

@@ -1,5 +1,3 @@
-import { Reviews } from "@prisma/client";
-
 export interface PetSitter {
   petSitterId: number;
   name: string;

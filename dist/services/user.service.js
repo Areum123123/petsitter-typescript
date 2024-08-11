@@ -25,12 +25,9 @@ class UserService {
             const updatedUser = yield this.userRepository.updateUser(userId, updateData);
             return updatedUser;
         });
-        // updateUserImage = async (userId: number, imageUrl: string) => {
-        //   return this.userRepository.updateImage(userId, { image_url: imageUrl });
-        // };
-        // uploadImage = async (userId: number, imageUrl: string) => {
-        //   return await this.userRepository.uploadImage(userId, imageUrl);
-        // };
+        this.uploadImage = (userId, fileUrl) => __awaiter(this, void 0, void 0, function* () {
+            return yield this.userRepository.uploadImage(userId, fileUrl);
+        });
     }
 }
 exports.UserService = UserService;

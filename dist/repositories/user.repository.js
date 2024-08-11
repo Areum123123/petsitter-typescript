@@ -53,14 +53,15 @@ class UserRepository {
         //     });
         //   };
         // }
-        // uploadImage = async (userId:number, imageUrl:string) => {
-        //   return await prisma.users.update({
-        //     where: { id: +userId },
-        //     data: { image_url: imageUrl },
-        //     select: {
-        //       image_url: true,
-        //     },
-        //   });
+        this.uploadImage = (userId, fileUrl) => __awaiter(this, void 0, void 0, function* () {
+            return yield prisma_util_js_1.prisma.users.update({
+                where: { id: +userId },
+                data: { image_url: fileUrl },
+                select: {
+                    image_url: true,
+                },
+            });
+        });
     }
 }
 exports.UserRepository = UserRepository;
