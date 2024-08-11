@@ -4,7 +4,7 @@ import { ReviewRepository } from "../repositories/review.repository";
 export class ReviewService {
   private reviewRepository = new ReviewRepository();
 
-  getMyReviews = async (userId: number): Promise<myReview[]> => {
+  getMyReviews = async (userId: number) => {
     const myReviews = await this.reviewRepository.getMyReviews(userId);
 
     return myReviews.map((review) => ({
@@ -26,7 +26,7 @@ export class ReviewService {
     userId: number,
     rating: number,
     comment: string
-  ): Promise<myReview> => {
+  ) => {
     //리뷰찾기
     const review = await this.reviewRepository.findReviewById(reviewId, userId);
     if (!review) {

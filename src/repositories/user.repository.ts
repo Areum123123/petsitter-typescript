@@ -36,19 +36,11 @@ export class UserRepository {
     });
   };
 
-  //이미지
-
-  //   updateImage = async (userId: number, updateData: Partial<UserTable>) => {
-  //     return await prisma.users.update({
-  //       where: { id: userId },
-  //       data: updateData,
-  //       select: {
-  //         image_url: true,
-  //       },
-  //     });
-  //   };
-  // }
-  uploadImage = async (userId: number, fileUrl: string) => {
+  //이미지업로드
+  uploadImage = async (
+    userId: number,
+    fileUrl: string
+  ): Promise<{ image_url: string | null }> => {
     return await prisma.users.update({
       where: { id: +userId },
       data: { image_url: fileUrl },

@@ -39,3 +39,17 @@ export interface rating {
   rating: number;
   comment: string;
 }
+
+export interface getMyReview {
+  id: number;
+  user_id: number;
+  petsitters?: PetsitterInfo;
+  rating: number;
+  comment: string;
+  created_at: Date;
+  updated_at: Date;
+}
+// 펫시터 정보를 정의하는 인터페이스
+export interface PetsitterInfo {
+  name: string;
+}

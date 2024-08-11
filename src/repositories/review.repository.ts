@@ -1,4 +1,4 @@
-import { rating } from "../models/reivew";
+import { getMyReview, rating } from "../models/reivew";
 import { prisma } from "../utils/prisma.util";
 
 export class ReviewRepository {
