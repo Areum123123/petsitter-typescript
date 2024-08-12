@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PetsitterService = void 0;
 const petsitter_repository_1 = require("../repositories/petsitter.repository");
+const prisma_util_1 = require("../utils/prisma.util");
 class PetsitterService {
     constructor() {
         this.petsitterRepository = new petsitter_repository_1.PetsitterRepository();
@@ -45,17 +46,26 @@ class PetsitterService {
             if (!petSitter) {
                 throw new Error("펫시터를 찾을 수 없습니다");
             }
-            const createdReview = yield this.petsitterRepository.createReview(userId, petSitterId, rating, comment);
+            //트랜잭션[리뷰작성,리뷰평점평균,펫시터에평점update]
+            const transactionResult = yield prisma_util_1.prisma.$transaction((tx) => __awaiter(this, void 0, void 0, function* () {
+                const createdReview = yield this.petsitterRepository.createReview(userId, petSitterId, rating, comment, tx);
+                //펫시터 리뷰
+                const petsitterReviews = yield this.petsitterRepository.findReviewsByPetSitterId(petSitterId, tx);
+                const averageRating = (petsitterReviews.reduce((sum, review) => sum + review.rating, 0) / petsitterReviews.length).toFixed(1);
+                //리뷰 평점
+                yield this.petsitterRepository.updateTotalRate(petSitterId, +averageRating, tx);
+                return createdReview;
+            }));
             //reviewResponse형식 리턴
             const reviewResponse = {
-                review_id: createdReview.id,
-                pet_sitter_id: createdReview.pet_sitter_id,
+                review_id: transactionResult.id,
+                pet_sitter_id: transactionResult.pet_sitter_id,
                 reviews: {
-                    user_name: createdReview.users.name,
-                    rating: createdReview.rating,
-                    comment: createdReview.comment,
-                    created_at: createdReview.created_at,
-                    updated_at: createdReview.updated_at,
+                    user_name: transactionResult.users.name,
+                    rating: transactionResult.rating,
+                    comment: transactionResult.comment,
+                    created_at: transactionResult.created_at,
+                    updated_at: transactionResult.updated_at,
                 },
             };
             return reviewResponse;

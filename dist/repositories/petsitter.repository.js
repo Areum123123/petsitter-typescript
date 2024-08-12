@@ -19,13 +19,13 @@ class PetsitterRepository {
                 orderBy: { created_at: "desc" },
             });
         });
-        this.findPetsittersById = (petSitterId) => __awaiter(this, void 0, void 0, function* () {
+        this.findPetsittersById = (petSitterId, tx) => __awaiter(this, void 0, void 0, function* () {
             return yield prisma_util_js_1.prisma.petsitters.findUnique({
                 where: { id: petSitterId },
             });
         });
-        this.createReview = (userId, petSitterId, rating, comment) => __awaiter(this, void 0, void 0, function* () {
-            return yield prisma_util_js_1.prisma.reviews.create({
+        this.createReview = (userId, petSitterId, rating, comment, prisma) => __awaiter(this, void 0, void 0, function* () {
+            return yield prisma.reviews.create({
                 data: {
                     user_id: userId,
                     pet_sitter_id: petSitterId,
@@ -37,6 +37,20 @@ class PetsitterRepository {
                         select: { name: true },
                     },
                 },
+            });
+        });
+        // 특정 펫시터에 대한 리뷰만. 리뷰점수통합위해
+        this.findReviewsByPetSitterId = (petSitterId, prisma) => __awaiter(this, void 0, void 0, function* () {
+            return yield prisma.reviews.findMany({
+                where: { pet_sitter_id: petSitterId },
+            });
+        });
+        //리뷰평점
+        this.updateTotalRate = (petSitterId, averageRating, //나중에수정 일단 테스트중
+        prisma) => __awaiter(this, void 0, void 0, function* () {
+            return yield prisma.petsitters.update({
+                where: { id: +petSitterId },
+                data: { total_rate: +averageRating },
             });
         });
         //펫시터 리뷰

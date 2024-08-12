@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-const PORT_NUMBER = process.env.PORT_NUMBER
+const PORT_NUMBER: number = process.env.PORT_NUMBER
   ? Number(process.env.PORT_NUMBER)
   : 3000;
 const ACCESS_TOKEN_SECRET_KEY =

@@ -6,12 +6,6 @@ import { login, SingupResponse } from "../models/auth";
 export class AuthController {
   private authService = new AuthService(); // AuthService 클래스 타입
 
-  //   private authService: AuthService; // AuthService 클래스 타입
-
-  //   constructor() {
-  //     this.authService = new AuthService();
-  //   }
-
   // 회원가입 API
   register = async (
     req: Request,

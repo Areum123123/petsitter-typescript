@@ -15,10 +15,6 @@ const auth_service_1 = require("../services/auth.service");
 class AuthController {
     constructor() {
         this.authService = new auth_service_1.AuthService(); // AuthService 클래스 타입
-        //   private authService: AuthService; // AuthService 클래스 타입
-        //   constructor() {
-        //     this.authService = new AuthService();
-        //   }
         // 회원가입 API
         this.register = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
