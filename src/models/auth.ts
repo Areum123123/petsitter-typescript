@@ -1,5 +1,6 @@
 // TODO: db에 저장하는 것은 class로 변환하기
 // TODO: 직접 제어하는 것들은 대부분 interface
+
 export interface User {
   id: number;
   email: string;
@@ -8,7 +9,6 @@ export interface User {
   phone_number: string;
   address: string;
 }
-
 
 export interface SingupResponse {
   email: string;
@@ -30,7 +30,7 @@ export interface TokenResponse {
 
 export type Role = "ADMIN" | "USER";
 
-export interface UserTable {
+export interface FindUser {
   id: number;
   email: string;
   password?: string;

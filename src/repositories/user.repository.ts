@@ -1,8 +1,8 @@
-import { updateUser, resultUpdateUser, UserTable } from "../models/auth.js";
+import { updateUser, resultUpdateUser, FindUser } from "../models/auth.js";
 import { prisma } from "../utils/prisma.util.js";
 
 export class UserRepository {
-  findUserById = async (userId: Number): Promise<UserTable | null> => {
+  findUserById = async (userId: Number): Promise<FindUser | null> => {
     return await prisma.users.findFirst({
       where: { id: +userId },
       select: {
