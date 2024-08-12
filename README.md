@@ -15,6 +15,21 @@ npx tsc   # TypeScript 컴파일러를 사용하여 .ts 파일을 .js 파일로 
 npm run start
 ```
 
+# ERD
+
+![ERD](./images/ERD.png)
+
+# API
+
+![API명세서](./images/API.png)
+
+# GROWTH
+
+- [ ] 리뷰수정시 펫시터 평균 평점 업데이트 로직 추가
+- [ ] 예약로그목록조회 STATUS쿼리로 조회 가능하게 로직 추가
+
+# 추가설명
+
 ```
 ## npm run build
 
@@ -36,16 +51,3 @@ npx tsc는 오직 TypeScript 파일의 컴파일만 수행합니다.
 
 프로젝트 설정에 따라 다름: 따라서, 두 명령어의 사용 여부는 프로젝트의 요구 사항에 따라 달라질 수 있습니다.
 ```
-
-# ERD
-
-[링크텍스트](https://drawsql.app/teams/are-1/diagrams/pet)
-
-# API
-
-![API명세서](./images/API.png)
-
-# GROWTH
-
-- [ ] 리뷰수정시 펫시터 평균 평점 업데이트 로직 추가
-- [ ] 예약로그목록조회 STATUS쿼리로 조회 가능하게 로직 추가
